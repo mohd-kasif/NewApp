@@ -17,11 +17,13 @@ import {
 } from 'react-native';
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
+const designWidth = 390;
+const designHeight = 844;
 const otpArray = Array(4).fill('');
 let newInputIndex = 0;
 const Verification = ({navigation, route}) => {
   const input = useRef();
-  console.log(route.params);
+  // console.log(route.params);
   //   console.log(otp);
   const [otp, setOtp] = useState({0: '', 1: '', 2: '', 3: ''});
   const [nextInputIndex, setNextInputIndex] = useState(0);
@@ -46,7 +48,7 @@ const Verification = ({navigation, route}) => {
   console.log('otp', otp);
   //   console.log(Object.keys(otp));
   const isEmpty = Object.keys(otp).every(item => otp[item]);
-  console.log(isEmpty);
+  // console.log(isEmpty);
 
   let flag = true;
   for (const [key, value] of Object.entries(otp)) {
@@ -85,11 +87,13 @@ const Verification = ({navigation, route}) => {
                   borderBottomWidth: 1,
                   textAlign: 'center',
                   fontSize: 28,
+                  color: '#333333',
                 }}
                 onChangeText={text => handleOTPChange(text, index)}
                 value={otp[index]}
                 maxLength={1}
                 placeholder="-"
+                placeholderTextColor="#757575"
                 keyboardType="phone-pad"
                 ref={nextInputIndex === index ? input : null}
               />
@@ -153,12 +157,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   submitButton: {
-    width: 342,
-    height: 48,
-    marginLeft: (((24 / Width) * 100) / 100) * Width,
+    width: (342 / designWidth) * Width,
+    height: (48 / designHeight) * Height,
+    // marginLeft: (((24 / Width) * 100) / 100) * Width,
+    marginLeft: (24 / designWidth) * Width,
     borderRadius: 8,
     backgroundColor: '#7B7B7B',
-    marginTop: (((126 / Height) * 100) / 100) * Height,
+    // marginTop: (((126 / Height) * 100) / 100) * Height,
+    marginTop: (126 / designHeight) * Height,
+    marginRight: (24 / designWidth) * Width,
   },
   submitText: {
     color: '#FFFFFF',

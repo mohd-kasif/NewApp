@@ -79,7 +79,7 @@ const BankAccount = ({navigation}) => {
   }
   function renderItems({item, index}) {
     const {title, rating, price} = item;
-    console.log(item);
+    // console.log(item);
     return (
       <View>
         <View
@@ -106,12 +106,16 @@ const BankAccount = ({navigation}) => {
       <View style={{flexDirection: 'row'}}>
         <Icon
           style={styles.drawer_icon}
-          size={24}
+          size={27}
           name="bars"
           onPress={() => navigation.openDrawer()}
           color="#020202"
         />
-        <TextInput placeholder="Search" style={styles.search_bar} />
+        <TextInput
+          placeholder="Search"
+          placeholderTextColor="#757575"
+          style={styles.search_bar}
+        />
       </View>
       <View>
         <Text style={styles.heading}>Intro to Stock Markets</Text>
@@ -171,26 +175,29 @@ const BankAccount = ({navigation}) => {
 };
 const styles = StyleSheet.create({
   drawer_icon: {
-    marginLeft: 20.5,
-    marginTop: 33,
+    marginLeft: (20.5 / designWidth) * Width,
+    marginTop: (33 / designHeight) * Height,
   },
   search_bar: {
-    width: 301,
-    height: 40,
+    width: (301 / designWidth) * Width,
+    height: (40 / designHeight) * Height,
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#020202',
-    marginTop: 22,
-    marginLeft: 21.5,
+    marginTop: (22 / designHeight) * Height,
+    marginLeft: (21 / designWidth) * Width,
+    marginRight: (20 / designWidth) * Width,
     padding: 10,
+    color: '#757575',
   },
   heading: {
-    marginLeft: 16,
-    marginTop: 35,
-    marginRight: 129,
+    marginLeft: (16 / designWidth) * Width,
+    marginTop: (32 / designHeight) * Height,
+    // marginRight: (129 / designWidth) * Width,
     fontSize: 24,
-    lineHeight: 24,
+    // lineHeight: 22,
     color: '#262626',
+    fontWeight: '400',
   },
   sub_heading: {
     marginLeft: 16,

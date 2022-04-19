@@ -18,13 +18,15 @@ import Google from '../Images/icons8-google.svg';
 
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
+const designWidth = 390;
+const designHeight = 844;
 
 const Login = ({navigation, route}) => {
   const [phone, setPhone] = useState('');
-  console.log('Height', Height);
-  console.log('width', Width);
-  console.log('Phone No Top Margin', (((35 / Height) * 100) / 100) * Height);
-  console.log(phone.length);
+  // console.log('Height', Height);
+  // console.log('width', Width);
+  // console.log('Phone No Top Margin', (((35 / Height) * 100) / 100) * Height);
+  // console.log(phone.length);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -50,6 +52,7 @@ const Login = ({navigation, route}) => {
             maxLength={10}
             style={styles.input_phone}
             placeholder="Enter phone no"
+            placeholderTextColor="#000000"
           />
           <Pressable
             onPress={() => navigation.navigate('Verification', phone)}
@@ -121,44 +124,48 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 88,
-    height: 44,
-    marginTop: 61,
-    marginLeft: 151,
-    marginRight: 151,
+    width: (88 / designWidth) * Width,
+    height: (44 / designHeight) * Height,
+    marginTop: (61 / designHeight) * Height,
+    marginLeft: (151 / designWidth) * Width,
+    // marginRight: 151,
     resizeMode: 'contain',
     backgroundColor: '#ffff',
   },
   second_logo: {
-    width: 303,
-    height: 194,
-    marginLeft: 41,
-    marginRight: 46,
-    marginTop: 55,
+    width: (303 / designWidth) * Width,
+    height: (194 / designHeight) * Height,
+    marginLeft: (41 / designWidth) * Width,
+    // marginRight: 46,
+    marginTop: (55 / designHeight) * Height,
   },
   login_text: {
-    width: 71,
-    height: 28,
+    // width: (71 / designWidth) * Width,
+    // height: (28 / designHeight) * Height,
     opacity: 0.8,
     fontWeight: 'bold',
     color: '#333333',
     fontSize: 24,
     lineHeight: 28,
-    marginLeft: 26,
-    marginTop: 77,
+    marginLeft: (26 / designWidth) * Width,
+    marginTop: (77 / designHeight) * Height,
+    // marginLeft: 26,
+    // marginRight: 77,
   },
   phone_no: {
-    width: 66,
-    height: 18,
-    marginLeft: (((26 / Width) * 100) / 100) * Width,
-    marginTop: (((35 / Height) * 100) / 100) * Height,
+    // width: 66,
+    // height: 18,
+    // marginLeft: (((26 / Width) * 100) / 100) * Width,
+    // marginTop: (((35 / Height) * 100) / 100) * Height,
+    marginLeft: (26 / designWidth) * Width,
+    marginTop: (35 / designHeight) * Height,
     opacity: 0.8,
     fontSize: 14,
     lineHeight: 18,
     color: '#333333',
   },
   input_phone: {
-    width: 320,
+    width: (342 / designWidth) * Width,
     marginRight: 24,
     marginLeft: 24,
     opacity: 0.5,
@@ -167,22 +174,23 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     fontSize: 16,
     color: '#333333',
+    padding: -10,
   },
   login_button: {
-    width: 320,
-    height: 48,
-    marginTop: 32,
-    marginLeft: 24,
+    width: (342 / designWidth) * Width,
+    height: (48 / designHeight) * Height,
+    marginTop: (32 / designHeight) * Height,
+    marginLeft: (24 / designWidth) * Width,
     // marginRight:24,
     borderRadius: 8,
     // backgroundColor: '#D6D6D6',
   },
   apple_login_button: {
     flexDirection: 'row',
-    width: 320,
-    height: 48,
-    marginTop: 16,
-    marginLeft: 24,
+    width: (342 / designWidth) * Width,
+    height: (48 / designHeight) * Height,
+    marginTop: (16 / designHeight) * Height,
+    marginLeft: (24 / designWidth) * Width,
     // marginRight:24,
     borderRadius: 8,
     backgroundColor: '#ffff',
@@ -211,10 +219,10 @@ const styles = StyleSheet.create({
     height: 20,
   },
   login_button_text: {
-    width: 138.48,
-    height: 20,
-    marginTop: 14,
-    marginLeft: 140,
+    width: (138.48 / designWidth) * Width,
+    height: (20 / designHeight) * Height,
+    marginTop: (14 / designHeight) * Height,
+    marginLeft: (140 / designWidth) * Width,
     color: '#FFFFFF',
     fontWeight: '400',
     fontSize: 16,
@@ -222,8 +230,8 @@ const styles = StyleSheet.create({
     // marginRight:24,
   },
   apple_logo: {
-    marginTop: 10,
-    marginLeft: 16,
+    marginTop: (9 / designHeight) * Height,
+    marginLeft: (16 / designWidth) * Width,
   },
   google_logo: {
     width: 30,

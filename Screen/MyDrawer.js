@@ -1,20 +1,46 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 
-import {StyleSheet, Text, View, Image, Linking} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Linking,
+  TouchableOpacity,
+  Dimensions,
+  Pressable,
+} from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
 
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
-import {Link} from '@react-navigation/native';
+const Width = Dimensions.get('window').width;
+const Height = Dimensions.get('window').height;
+const designWidth = 390;
+const designHeight = 844;
 
-export const OpenCamera = () => {
+export const OpenCamera = ({navigation, route}) => {
+  const camera = useRef(null);
+  const [camflip, setCameraflip] = useState(true);
+  const [imagePath, setImagepath] = useState('');
+  const takePhoto = async () => {
+    try {
+      const photo = await camera.current.takePhoto({flash: 'off'});
+      setImagepath(photo.path);
+      // console.log(imagePath);
+      // console.log(`file:/${imagePath}`);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const devices = useCameraDevices();
-  const device = devices.front;
+  const device = camflip ? devices.front : devices.back;
   if (device == null)
     return (
       <View>
@@ -22,11 +48,54 @@ export const OpenCamera = () => {
       </View>
     );
   return (
-    <Camera style={StyleSheet.absoluteFill} device={device} isActive={true} />
+    <View>
+      <View style={styles.sub_container}>
+        <Ionicons
+          name="chevron-back-sharp"
+          size={30}
+          color="#020202"
+          onPress={() => navigation.goBack()}
+        />
+        <Text style={styles.takePhoto}>Take a photo</Text>
+        <View></View>
+      </View>
+      <View style={styles.cam_container}>
+        <Camera
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={true}
+          photo={true}
+          ref={camera}
+        />
+        <View style={styles.cam_buttons}>
+          <TouchableOpacity onPress={takePhoto}>
+            <MaterialIcon
+              name="camera"
+              size={60}
+              color="red"
+              // style={styles.camera}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setCameraflip(!camflip)}
+            style={{marginLeft: (80 / designWidth) * Width}}>
+            <Ionicons name="camera-reverse" size={50} color="red" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={[styles.saveButton, styles.shadow]}>
+        <Pressable
+          style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}
+          onPress={() => navigation.navigate('Dashboard', imagePath)}>
+          <Text style={styles.saveText}>Save</Text>
+        </Pressable>
+      </View>
+    </View>
   );
 };
 
 const MyDrawer = props => {
+  console.log(props.navigation);
   const handleCamera = async () => {
     try {
       const newCameraPermission = await Camera.requestCameraPermission();
@@ -47,7 +116,8 @@ const MyDrawer = props => {
           onPress={() => props.navigation.closeDrawer()}
           style={styles.cross_icon}
           name="cross"
-          size={20}
+          size={24}
+          color="#020202"
         />
         <Text style={styles.profile}>Profile</Text>
         <View style={{position: 'relative'}}>
@@ -119,6 +189,60 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: '#262626',
     marginBottom: 32,
+  },
+  camera: {
+    marginBottom: (30 / designHeight) * Height,
+  },
+  sub_container: {
+    marginTop: (34 / designHeight) * Height,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: (24 / designWidth) * Width,
+  },
+  takePhoto: {
+    fontSize: 18,
+    lineHeight: 18,
+    fontWeight: '700',
+    color: '#262626',
+  },
+  cam_container: {
+    width: (342 / designWidth) * Width,
+    height: (491 / designHeight) * Height,
+    marginLeft: (24 / designWidth) * Width,
+    marginTop: (37 / designHeight) * Height,
+  },
+  cam_buttons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop: (409 / designHeight) * Height,
+  },
+  saveButton: {
+    width: (342 / designWidth) * Width,
+    height: (48 / designHeight) * Height,
+    marginLeft: (24 / designWidth) * Width,
+    borderRadius: 8,
+    backgroundColor: '#7B7B7B',
+    // marginTop: (((126 / Height) * 100) / 100) * Height,
+    marginTop: (22 / designHeight) * Height,
+    // marginRight: (24 / designWidth) * Width,
+    // paddingVertical: 45,
+    // paddingHorizontal: 25,
+    marginVertical: 10,
+  },
+  saveText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    lineHeight: 20,
+    textAlign: 'center',
+    marginTop: (((14 / Height) * 100) / 100) * Height,
+  },
+  shadow: {
+    shadowColor: '#7B7B7B',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
 });
 export default MyDrawer;
