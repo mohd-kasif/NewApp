@@ -45,7 +45,7 @@ const Verification = ({navigation, route}) => {
   useEffect(() => {
     input.current.focus();
   }, [nextInputIndex]);
-  console.log('otp', otp);
+  // console.log('otp', otp);
   //   console.log(Object.keys(otp));
   const isEmpty = Object.keys(otp).every(item => otp[item]);
   // console.log(isEmpty);

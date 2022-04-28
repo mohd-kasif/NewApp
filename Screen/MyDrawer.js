@@ -33,7 +33,9 @@ export const OpenCamera = ({navigation, route}) => {
     try {
       const photo = await camera.current.takePhoto({flash: 'off'});
       setImagepath(photo.path);
+      console.log(photo.path);
       // console.log(imagePath);
+      // console.log('route', route);
       // console.log(`file:/${imagePath}`);
     } catch (e) {
       console.log(e);
@@ -95,11 +97,11 @@ export const OpenCamera = ({navigation, route}) => {
 };
 
 const MyDrawer = props => {
-  console.log(props.navigation);
+  // console.log(props.navigation);
   const handleCamera = async () => {
     try {
       const newCameraPermission = await Camera.requestCameraPermission();
-      console.log('Camera Permission', newCameraPermission);
+      // console.log('Camera Permission', newCameraPermission);
       if (newCameraPermission === 'authorized') {
         props.navigation.navigate('OpenCamera');
       } else {

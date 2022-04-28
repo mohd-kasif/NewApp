@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {
   ScrollView,
@@ -12,11 +12,15 @@ const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
 
 import Carousel from 'react-native-anchor-carousel';
+// import Carousel from 'react-native-snap-carousel';
+// import {FloatingMenu} from 'react-native-floating-action-menu';
+import FloatingButton from './FloatingButton';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 const designWidth = 390;
 const designHeight = 844;
 const BankAccount = ({navigation}) => {
+  const [isMenuOpen, setMenuOpen] = useState(false);
   const data = [
     {
       title: 'Carousel 01',
@@ -49,6 +53,13 @@ const BankAccount = ({navigation}) => {
       price: 1200,
     },
   ];
+  const items = [{}, {}, {}];
+  const Itemressed = (item, index) => {
+    console.log(item, index);
+  };
+  const handleToggle = () => {
+    setMenuOpen(!isMenuOpen);
+  };
   const carouselRef = useRef(null);
   useEffect(() => {
     carouselRef.current.scrollToIndex(1);
@@ -58,119 +69,106 @@ const BankAccount = ({navigation}) => {
     const {title, rating, price} = item;
     return (
       <View>
-        <View
-          style={styles.sec_card}
-          onPress={() => {
-            if (index === 0) {
-              carouselRef.current.scrollToIndex(5);
-            } else if (index === data.length - 1) {
-              carouselRef.current.scrollToIndex(1);
-            } else {
-              carouselRef.current.scrollToIndex(index);
-            }
-          }}></View>
+        <View style={styles.sec_card}></View>
         <View style={styles.lowerContainer}>
-          <Text>{title}</Text>
-          <Text>{rating}</Text>
-          <Text>{price}</Text>
+          <Text style={{color: '#262626'}}>{title}</Text>
+          <Text style={{color: '#262626'}}>{rating}</Text>
+          <Text style={{color: '#262626'}}>{price}</Text>
         </View>
       </View>
     );
   }
   function renderItems({item, index}) {
     const {title, rating, price} = item;
-    // console.log(item);
+    // console.log('index', index);
     return (
       <View>
-        <View
-          style={styles.card}
-          onPress={() => {
-            if (index === 0) {
-              carouselRef.current.scrollToIndex(5);
-            } else if (index === data.length - 1) {
-              carouselRef.current.scrollToIndex(1);
-            } else {
-              carouselRef.current.scrollToIndex(index);
-            }
-          }}></View>
+        <View style={styles.card}></View>
         <View style={styles.lowerContainer}>
-          <Text>{title}</Text>
-          <Text>{rating}</Text>
-          <Text>{price}</Text>
+          <Text style={{color: '#262626'}}>{title}</Text>
+          <Text style={{color: '#262626'}}>{rating}</Text>
+          <Text style={{color: '#262626'}}>{price}</Text>
         </View>
       </View>
     );
   }
   return (
-    <ScrollView style={{flex: 1}}>
-      <View style={{flexDirection: 'row'}}>
-        <Icon
-          style={styles.drawer_icon}
-          size={27}
-          name="bars"
-          onPress={() => navigation.openDrawer()}
-          color="#020202"
-        />
-        <TextInput
-          placeholder="Search"
-          placeholderTextColor="#757575"
-          style={styles.search_bar}
-        />
-      </View>
+    <View style={styles.mainView}>
+      <ScrollView style={styles.scrollViewStyle}>
+        <View style={{flexDirection: 'row'}}>
+          <Icon
+            style={styles.drawer_icon}
+            size={27}
+            name="bars"
+            onPress={() => navigation.openDrawer()}
+            color="#020202"
+          />
+          <TextInput
+            placeholder="Search"
+            placeholderTextColor="#757575"
+            style={styles.search_bar}
+          />
+        </View>
+        <View>
+          <Text style={styles.heading}>Intro to Stock Markets</Text>
+          <Text style={styles.sub_heading}>
+            Watch these videos and if you like subscribe to{'\n'}our course to
+            further excel in market
+          </Text>
+        </View>
+        <View>
+          <Carousel
+            data={data}
+            renderItem={renderItems}
+            itemWidth={(267 / designWidth) * Width}
+            inActiveOpacity={0.3}
+            containerWidth={Width}
+            ref={carouselRef}
+          />
+        </View>
+        <View>
+          <Text style={styles.second_heading}>Trading and Investing</Text>
+          <Text style={styles.sub_heading}>
+            Watch these videos and if you like subscribe to{'\n'}our course to
+            further excel in market
+          </Text>
+        </View>
+        <View>
+          <Carousel
+            data={data}
+            renderItem={renderSecond}
+            itemWidth={(255 / designWidth) * Width}
+            inActiveScale={1}
+            separatorWidth={15}
+            containerWidth={Width}
+            ref={carouselRef}
+          />
+        </View>
+        <View>
+          <Text style={styles.second_heading}>
+            Equities, Futures and Options
+          </Text>
+          <Text style={styles.sub_heading}>
+            Watch these videos and if you like subscribe to{'\n'}our course to
+            further excel in market
+          </Text>
+        </View>
+        <View>
+          <Carousel
+            data={data}
+            renderItem={renderSecond}
+            itemWidth={(255 / designWidth) * Width}
+            inActiveScale={1}
+            separatorWidth={15}
+            containerWidth={Width}
+            ref={carouselRef}
+          />
+        </View>
+      </ScrollView>
       <View>
-        <Text style={styles.heading}>Intro to Stock Markets</Text>
-        <Text style={styles.sub_heading}>
-          Watch these videos and if you like subscribe to{'\n'}our course to
-          further excel in market
-        </Text>
+        <FloatingButton style={{bottom: -620, right: 30}}></FloatingButton>
       </View>
-      <View>
-        <Carousel
-          data={data}
-          renderItem={renderItems}
-          itemWidth={(267 / designWidth) * Width}
-          inActiveOpacity={0.3}
-          containerWidth={Width}
-          ref={carouselRef}
-        />
-      </View>
-      <View>
-        <Text style={styles.second_heading}>Trading and Investing</Text>
-        <Text style={styles.sub_heading}>
-          Watch these videos and if you like subscribe to{'\n'}our course to
-          further excel in market
-        </Text>
-      </View>
-      <View>
-        <Carousel
-          data={data}
-          renderItem={renderSecond}
-          itemWidth={(255 / designWidth) * Width}
-          inActiveScale={1}
-          separatorWidth={15}
-          containerWidth={Width}
-          ref={carouselRef}
-        />
-      </View>
-      <View>
-        <Text style={styles.second_heading}>Equities, Futures and Options</Text>
-        <Text style={styles.sub_heading}>
-          Watch these videos and if you like subscribe to{'\n'}our course to
-          further excel in market
-        </Text>
-      </View>
-      <View>
-        <Carousel
-          data={data}
-          renderItem={renderSecond}
-          itemWidth={(255 / designWidth) * Width}
-          inActiveScale={1}
-          separatorWidth={15}
-          containerWidth={Width}
-          ref={carouselRef}
-        />
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -228,6 +226,23 @@ const styles = StyleSheet.create({
     marginRight: 0,
     paddingRight: 0,
     marginTop: 23,
+  },
+  floatingMenu: {
+    width: '100%',
+    // height: '100%',
+    position: 'relative',
+    // color: 'black',
+  },
+  mainView: {
+    position: 'relative',
+    flex: 1,
+  },
+  scrollViewStyle: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
 export default BankAccount;
