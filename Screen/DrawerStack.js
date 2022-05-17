@@ -19,10 +19,10 @@ const DrawerStack = () => {
       screenOptions={{headerShown: false, drawerLabelStyle: {marginLeft: -25}}}>
       {/* <Drawer.Screen name="Home" component={HomeScreen} /> */}
       <Drawer.Screen
-        name="Bank account details"
+        name="Home"
         component={BankAccount}
         options={{
-          drawerIcon: ({color}) => <Icon name="bank" size={20} color={color} />,
+          drawerIcon: ({color}) => <Icon name="home" size={20} color={color} />,
         }}
       />
       <Drawer.Screen

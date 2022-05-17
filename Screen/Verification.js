@@ -1,14 +1,9 @@
 import {TabRouter} from '@react-navigation/native';
 import React, {useState, useRef, useEffect} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
-  Image,
   TextInput,
   Pressable,
   Dimensions,

@@ -1,20 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TabRouter} from '@react-navigation/native';
 
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Image,
-  TextInput,
-  Pressable,
-  Dimensions,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {StyleSheet, Text, View, Dimensions} from 'react-native';
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
 
@@ -22,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const Whatsapp = ({navigation}) => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Recieve updates on whatsapp</Text>
+      <Text style={{color: '#262626'}}>Recieve updates on whatsapp</Text>
     </View>
   );
 };

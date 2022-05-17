@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Google from '../Images/icons8-google.svg';
+import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
 // import Verification from './Verification';
 // const {height, width} = Dimensions.get('window');
 
@@ -27,6 +30,21 @@ const Login = ({navigation, route}) => {
   // console.log('width', Width);
   // console.log('Phone No Top Margin', (((35 / Height) * 100) / 100) * Height);
   // console.log(phone.length);
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '644587669043-ug40kh5qqbaj36djdngqhe7s3tp8k7dv.apps.googleusercontent.com',
+    });
+  }, []);
+  const signinwithgoogle = async e => {
+    try {
+      const {idToken} = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      await auth().signInWithCredential(googleCredential);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -78,6 +96,7 @@ const Login = ({navigation, route}) => {
           <Text style={styles.apple_button_text}>Log in with Apple ID</Text>
         </Pressable>
         <Pressable
+          onPress={signinwithgoogle}
           style={({pressed}) => [
             {opacity: pressed ? 0.5 : 1},
             styles.apple_login_button,

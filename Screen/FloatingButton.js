@@ -9,7 +9,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 const FloatingButton = props => {
   var animation = useRef(new Animated.Value(0)).current;
-  console.log('animation', animation);
+  // console.log('animation', animation);
   const [open, setOpen] = useState(false);
   const toggleMenu = () => {
     const toValue = open ? 0 : 1;
@@ -20,7 +20,6 @@ const FloatingButton = props => {
     }).start();
     setOpen(!open);
   };
-  console.log(open);
   const menuSpin = animation.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '45deg'],
@@ -37,6 +36,10 @@ const FloatingButton = props => {
     inputRange: [0, 1],
     outputRange: [0, -180],
   });
+  const heart = () => {
+    console.log('heart');
+    // alert('Location pressed');
+  };
   return (
     <View style={[styles.container, props.style]}>
       <TouchableWithoutFeedback>
@@ -54,7 +57,7 @@ const FloatingButton = props => {
               ],
             },
           ]}>
-          <Entypo name="heart-outlined" size={30} color="#525151" />
+          <Entypo name="heart-outlined" size={30} color="#FFF" />
         </Animated.View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback>
@@ -72,10 +75,10 @@ const FloatingButton = props => {
               ],
             },
           ]}>
-          <Entypo name="thumbs-up" size={30} color="#525151" />
+          <Entypo name="thumbs-up" size={30} color="#FFF" />
         </Animated.View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={heart}>
         <Animated.View
           style={[
             styles.button,
@@ -90,7 +93,7 @@ const FloatingButton = props => {
               ],
             },
           ]}>
-          <Entypo name="location-pin" size={30} color="#525151" />
+          <Entypo name="location-pin" size={30} color="#FFF" />
         </Animated.View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={toggleMenu}>
@@ -112,6 +115,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     position: 'absolute',
     alignItems: 'flex-end',
+    marginBottom: 10,
   },
   button: {
     position: 'absolute',
@@ -132,10 +136,10 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 48 / 2,
-    backgroundColor: '#FFF',
+    backgroundColor: '#525151',
     // alignItems: 'center',
     // justifyContent: 'center',
-    right: 5,
+    right: 7,
   },
 });
 

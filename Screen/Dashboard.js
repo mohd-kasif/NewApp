@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 const WatchList = () => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Watchlist!</Text>
+      <Text style={{color: '#262626'}}>Watchlist!</Text>
     </View>
   );
 };
@@ -19,14 +19,14 @@ const WatchList = () => {
 const Portfolio = () => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Portfolio!</Text>
+      <Text style={{color: '#262626'}}>Portfolio!</Text>
     </View>
   );
 };
 const Notification = () => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Notification!</Text>
+      <Text style={{color: '#262626'}}>Notification!</Text>
     </View>
   );
 };
@@ -50,7 +50,7 @@ const Dashboard = () => {
       />
       <Tab.Screen
         name="Portfolio"
-        component={WatchList}
+        component={Portfolio}
         options={{
           tabBarLabel: 'Portfolio',
           tabBarIcon: ({color, size}) => (
@@ -60,7 +60,7 @@ const Dashboard = () => {
       />
       <Tab.Screen
         name="Watchlist"
-        component={Portfolio}
+        component={WatchList}
         options={{
           tabBarLabel: 'Watchlist',
           tabBarIcon: ({color, size}) => (

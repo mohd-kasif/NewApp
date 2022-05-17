@@ -166,7 +166,7 @@ const BankAccount = ({navigation}) => {
         </View>
       </ScrollView>
       <View>
-        <FloatingButton style={{bottom: -620, right: 30}}></FloatingButton>
+        <FloatingButton style={{bottom: -660, right: 20}} />
       </View>
     </View>
   );
