@@ -7,6 +7,8 @@ import {
   View,
   TextInput,
   Dimensions,
+  BackHandler,
+  Alert,
 } from 'react-native';
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
@@ -63,7 +65,26 @@ const BankAccount = ({navigation}) => {
   const carouselRef = useRef(null);
   useEffect(() => {
     carouselRef.current.scrollToIndex(1);
-  });
+    // const backButton = () => {
+    //   Alert.alert('Are you sure you want to exit', [
+    //     {
+    //       text: 'Cancel',
+    //       onPress: () => null,
+    //       style: 'cancel',
+    //     },
+    //     {
+    //       text: 'Yes',
+    //       onPress: () => BackHandler.exitApp(),
+    //     },
+    //   ]);
+    //   return true;
+    // };
+    // const backHandler = BackHandler.addEventListener(
+    //   'hardwareBackPress',
+    //   backButton,
+    // );
+    // return () => backHandler.remove();
+  }, []);
 
   function renderSecond({item, index}) {
     const {title, rating, price} = item;

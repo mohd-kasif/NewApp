@@ -9,17 +9,20 @@ import {
   TouchableOpacity,
   Dimensions,
   Pressable,
+  Alert,
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
 
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
+import NativeAsyncLocalStorage from 'react-native/Libraries/Storage/NativeAsyncLocalStorage';
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
 const designWidth = 390;
@@ -97,7 +100,7 @@ export const OpenCamera = ({navigation, route}) => {
 };
 
 const MyDrawer = props => {
-  // console.log(props.navigation);
+  console.log('my drawer', props);
   const handleCamera = async () => {
     try {
       const newCameraPermission = await Camera.requestCameraPermission();
@@ -110,6 +113,22 @@ const MyDrawer = props => {
     } catch (e) {
       console.log(e);
     }
+  };
+  const handleLogout = () => {
+    Alert.alert(
+      'Log out',
+      'Are you really want to Log out?',
+      [
+        {text: 'Cancel', onPress: () => null},
+        {
+          text: 'Confirm',
+          onPress: () => {
+            props.navigation.navigate('Login');
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   };
   return (
     <View style={{flex: 1}}>
@@ -149,6 +168,17 @@ const MyDrawer = props => {
         </View>
         <Text style={styles.profile_name}>Mohd Kashif</Text>
         <DrawerItemList {...props} />
+        <View style={{marginTop: 10}}>
+          <TouchableOpacity style={styles.logout} onPress={handleLogout}>
+            <Icon
+              name="power-off"
+              size={20}
+              color="grey"
+              style={styles.logout}
+            />
+            <Text style={styles.logot_text}>Logout</Text>
+          </TouchableOpacity>
+        </View>
       </DrawerContentScrollView>
     </View>
   );
@@ -245,6 +275,15 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 3,
+  },
+  logout: {
+    flexDirection: 'row',
+    marginLeft: 9,
+  },
+  logot_text: {
+    fontWeight: 'bold',
+    color: 'grey',
+    marginLeft: 9,
   },
 });
 export default MyDrawer;

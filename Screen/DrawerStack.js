@@ -10,9 +10,11 @@ import MyDrawer from './MyDrawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {NavigationContainer} from '@react-navigation/native';
 const Drawer = createDrawerNavigator();
 
-const DrawerStack = () => {
+const DrawerStack = props => {
+  console.log('props', props);
   return (
     <Drawer.Navigator
       drawerContent={props => <MyDrawer {...props} />}
@@ -59,7 +61,7 @@ const DrawerStack = () => {
           drawerIcon: ({color}) => <Icon name="gift" size={20} color={color} />,
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Logout"
         component={Logout}
         options={{
@@ -67,7 +69,7 @@ const DrawerStack = () => {
             <Icon name="power-off" size={20} color={color} />
           ),
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };

@@ -30,7 +30,11 @@ const Notification = () => {
     </View>
   );
 };
-const Dashboard = () => {
+const Dashboard = ({navigation, route}) => {
+  // console.log('routes', route.params.name);
+  const {params} = route;
+  // console.log('params', params);
+  console.log('routes on dashboard', params);
   return (
     <Tab.Navigator
       initialRouteName="Home"

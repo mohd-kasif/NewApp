@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Google from '../Images/icons8-google.svg';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import jwt_decode from 'jwt-decode';
 
 // import Verification from './Verification';
 // const {height, width} = Dimensions.get('window');
@@ -26,6 +27,9 @@ const designHeight = 844;
 
 const Login = ({navigation, route}) => {
   const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+  const [url, setUrl] = useState('');
+  const [verified, setVerified] = useState(false);
   // console.log('Height', Height);
   // console.log('width', Width);
   // console.log('Phone No Top Margin', (((35 / Height) * 100) / 100) * Height);
@@ -40,11 +44,22 @@ const Login = ({navigation, route}) => {
     try {
       const {idToken} = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // console.log(googleCredential);
+      // console.log(jwt_decode(googleCredential.token));
+      const decoded = jwt_decode(googleCredential.token);
       await auth().signInWithCredential(googleCredential);
+      // setName(decoded.name);
+      // setUrl(decoded.picture);
+      // setVerified(decoded.email_verified);
+      if (decoded.email_verified) {
+        navigation.navigate('Dashboard', decoded);
+      }
+      console.log('decode', decoded);
     } catch (e) {
       console.log(e);
     }
   };
+  // console.log(decoded);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
