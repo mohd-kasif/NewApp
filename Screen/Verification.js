@@ -18,10 +18,11 @@ const otpArray = Array(4).fill('');
 let newInputIndex = 0;
 const Verification = ({navigation, route}) => {
   const input = useRef();
-  // console.log(route.params);
-  //   console.log(otp);
+  console.log('number', route.params);
   const [otp, setOtp] = useState({0: '', 1: '', 2: '', 3: ''});
   const [nextInputIndex, setNextInputIndex] = useState(0);
+  // let n_otp = '';
+  let OTP = '';
 
   const handleOTPChange = (text, index) => {
     const newOTP = {...otp};
@@ -36,28 +37,77 @@ const Verification = ({navigation, route}) => {
 
     setNextInputIndex(newInputIndex);
   };
-  //   console.log('otp5', otp);
+  // console.log('otp5', otp);
   useEffect(() => {
     input.current.focus();
   }, [nextInputIndex]);
+
+  useEffect(() => {
+    fetchData();
+  });
+  const fetchData = async () => {
+    try {
+      const res = await fetch('http://10.0.2.2:3002/getPhone', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          phone_num: route.params,
+        }),
+      });
+      // console.log('response', res);
+      const data = await res.json();
+      // console.log('data', data);
+      OTP = data[0].otp;
+      console.log(OTP);
+      // OTP = data.filter(item => item.ph_num === route.params);
+      // var b = Object.values(otp);
+      // // console.log(b);
+      // var n_otp = '';
+      // for (let i = 0; i < b.length; i++) {
+      //   n_otp += b[i];
+      // }
+      // console.log(OTP);
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+  const handleSubmit = () => {
+    // console.log('backend', OTP[0].otp);
+    // console.log(typeof OTP[0].otp);
+    console.log(OTP);
+    const b = Object.values(otp);
+    let n_otp = '';
+    for (let i = 0; i < b.length; i++) {
+      n_otp += b[i];
+    }
+    console.log('frontedn', n_otp);
+    console.log(typeof n_otp);
+    if (OTP == n_otp) {
+      navigation.navigate('Dashboard');
+    } else {
+      ShowToast();
+      console.log('toast');
+    }
+  };
   // console.log('otp', otp);
   //   console.log(Object.keys(otp));
-  const isEmpty = Object.keys(otp).every(item => otp[item]);
+  // const isEmpty = Object.keys(otp).every(item => otp[item]);
   // console.log(isEmpty);
 
-  let flag = true;
-  for (const [key, value] of Object.entries(otp)) {
-    if (Number(value) !== Number(key) + 1) {
-      flag = false;
-    }
-  }
+  // let flag = true;
+  // for (const [key, value] of Object.entries(otp)) {
+  //   if (Number(value) !== Number(key) + 1) {
+  //     flag = false;
+  //   }
+  // }
   const ShowToast = () => {
     ToastAndroid.show(
-      'OTP Incorrect, please try again!',
+      'Wrong OTP, please try again!',
       ToastAndroid.SHORT,
       ToastAndroid.CENTER,
     );
   };
+  // console.log(otp);
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.topTextContainer}>
@@ -106,14 +156,9 @@ const Verification = ({navigation, route}) => {
       </View>
       <View>
         <Pressable
-          disabled={isEmpty ? false : true}
-          onPress={() =>
-            flag ? navigation.navigate('Dashboard') : ShowToast()
-          }
-          style={({pressed}) => [
-            {opacity: !isEmpty ? 0.5 : 1},
-            styles.submitButton,
-          ]}>
+          // disabled={}
+          onPress={handleSubmit}
+          style={({pressed}) => [{opacity: 1}, styles.submitButton]}>
           <Text style={styles.submitText}>Submit</Text>
         </Pressable>
       </View>
